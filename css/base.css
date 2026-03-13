@@ -1,0 +1,323 @@
+/* =============================================
+   QUEUE MASTERY — BASE STYLES
+   Global reset, themes, typography, utilities
+   ============================================= */
+
+
+/* =============================================
+   RESET
+   ============================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* =============================================
+   DARK THEME VARIABLES
+   ============================================= */
+
+[data-theme="dark"] {
+
+    --bg-deep: #30302a;
+    --bg-card: #1c1c16;
+    --bg-card-hover: #24241c;
+    --bg-surface: #22221a;
+
+    --border: #3a3a2c;
+    --border-light: #4e4e3a;
+
+    --text-primary: #F0EDE0;
+    --text-secondary: #B8B4A0;
+    --text-muted: #7d7963;
+
+    --accent: #A4B465;
+    --accent-glow: rgba(164,180,101,0.12);
+
+    --olive: #626F47;
+    --olive-glow: rgba(98,111,71,0.14);
+
+    --gold: #FFCF50;
+    --gold-glow: rgba(255,207,80,0.10);
+
+    --cream: #FEFAE0;
+    --cream-glow: rgba(254,250,224,0.05);
+
+    --error: #D4664A;
+    --error-glow: rgba(212,102,74,0.10);
+
+    --success: #A4B465;
+    --success-glow: rgba(164,180,101,0.12);
+
+    --code-bg: #18180f;
+
+    --syn-kw: #A4B465;
+    --syn-cls: #FFCF50;
+    --syn-fn: #8aad4a;
+    --syn-str: #88c070;
+    --syn-num: #D4664A;
+    --syn-cmt: #5a5e48;
+
+    --nav-bg: rgba(20,20,16,0.94);
+    --login-overlay: rgba(14,14,10,0.93);
+
+}
+
+
+/* =============================================
+   LIGHT THEME VARIABLES
+   ============================================= */
+
+[data-theme="light"] {
+
+    --bg-deep: #FFC96F;
+    --bg-card: #FFFFF5;
+    --bg-card-hover: #FAFAE8;
+    --bg-surface: #F2EECE;
+
+    --border: #D6D0A8;
+    --border-light: #C4BE96;
+
+    --text-primary: #2A2E1E;
+    --text-secondary: #4A5035;
+    --text-muted: #74785E;
+
+    --accent: #626F47;
+    --accent-glow: rgba(98,111,71,0.10);
+
+    --olive: #4A5535;
+    --olive-glow: rgba(74,85,53,0.12);
+
+    --gold: #D4A520;
+    --gold-glow: rgba(212,165,32,0.10);
+
+    --cream: #FEFAE0;
+    --cream-glow: rgba(254,250,224,0.12);
+
+    --error: #B84830;
+    --error-glow: rgba(184,72,48,0.08);
+
+    --success: #5A7A30;
+    --success-glow: rgba(90,122,48,0.10);
+
+    --code-bg: #EEEAD0;
+
+    --syn-kw: #626F47;
+    --syn-cls: #8A7010;
+    --syn-fn: #4A5535;
+    --syn-str: #3A7530;
+    --syn-num: #B84830;
+    --syn-cmt: #8A8870;
+
+    --nav-bg: rgba(254,250,224,0.95);
+    --login-overlay: rgba(254,250,224,0.93);
+
+}
+
+
+/* =============================================
+   FONT SYSTEM
+   ============================================= */
+
+:root {
+
+    --font-body: 'DM Sans', system-ui, sans-serif;
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+    --nav-height: 60px;
+
+    --radius: 10px;
+    --radius-sm: 6px;
+    --radius-lg: 16px;
+
+    --max-w: 1200px;
+
+}
+
+
+body.dyslexic-font {
+
+    --font-body: 'OpenDyslexic', sans-serif;
+    --font-display: 'OpenDyslexic', serif;
+    --font-mono: 'OpenDyslexic Mono', 'OpenDyslexic', monospace;
+
+}
+
+
+/* =============================================
+   GLOBAL PAGE STYLING
+   ============================================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+
+    font-family: var(--font-body);
+    background: var(--bg-deep);
+    color: var(--text-primary);
+
+    font-size: 1.05rem;
+    line-height: 1.7;
+
+    min-height: 100vh;
+
+    overflow-x: hidden;
+
+    transition:
+        background 0.3s,
+        color 0.3s;
+
+}
+
+h6 {
+    text-align: center;
+    font-weight: 100;
+}
+
+
+/* =============================================
+   SCROLLBARS
+   ============================================= */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+
+/* =============================================
+   BUTTON BASE
+   ============================================= */
+
+.btn {
+
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    padding: 0.85rem 1.7rem;
+
+    border: none;
+    border-radius: var(--radius-sm);
+
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s;
+
+    text-decoration: none;
+
+    min-height: 48px;
+
+}
+
+.btn-primary {
+
+    background: var(--olive);
+    color: #fff;
+
+}
+
+.btn-primary:hover {
+
+    filter: brightness(1.15);
+    transform: translateY(-1px);
+
+}
+
+.btn-secondary {
+
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+
+    color: var(--text-secondary);
+
+}
+
+.btn-secondary:hover {
+
+    color: var(--text-primary);
+    border-color: var(--border-light);
+
+}
+
+.btn:disabled {
+
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+
+}
+
+
+/* =============================================
+   UTILITIES
+   ============================================= */
+
+.hidden {
+    display: none !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.flex {
+    display: flex;
+}
+
+.grid {
+    display: grid;
+}
+
+.container {
+
+    max-width: var(--max-w);
+    margin-left: auto;
+    margin-right: auto;
+
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+
+}
+
+
+/* =============================================
+   ANIMATIONS
+   ============================================= */
+
+@keyframes fadeIn {
+
+    from {
+
+        opacity: 0;
+        transform: translateY(12px);
+
+    }
+
+    to {
+
+        opacity: 1;
+        transform: translateY(0);
+
+    }
+
+}
