@@ -1,0 +1,440 @@
+/* =============================================
+   QUEUE MASTERY — SIMULATOR
+   Static queue visuals, simulator, logs, pointers
+   ============================================= */
+
+
+/* =============================================
+   STATIC QUEUE VISUAL
+   ============================================= */
+
+.pointer-labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+}
+
+.static-queue-visual {
+    display: flex;
+    gap: 3px;
+}
+
+.sq-cell {
+    position: relative;
+    width: 68px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    border: 2px solid;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    transition: all 0.35s;
+}
+
+.sq-cell .val {
+    font-size: 1.1rem;
+}
+
+.sq-cell .idx {
+    position: absolute;
+    bottom: -18px;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+}
+
+.sq-cell.empty {
+    background: var(--cell-empty);
+    border-color: var(--border);
+    color: var(--text-muted);
+}
+
+.sq-cell.filled {
+    background: var(--cell-filled-bg);
+    border-color: var(--cell-filled-border);
+    color: var(--accent);
+}
+
+.sq-cell.front-cell {
+    background: var(--cell-front-bg);
+    border-color: var(--cell-front-border);
+    color: var(--success);
+}
+
+.sq-cell.rear-cell {
+    background: var(--cell-rear-bg);
+    border-color: var(--cell-rear-border);
+    color: var(--gold);
+}
+
+[data-theme="light"] .sq-cell.rear-cell {
+    color: #8A7010;
+}
+
+.sq-cell.wasted {
+    background: var(--cell-wasted-bg);
+    border-color: var(--cell-wasted-border);
+    color: var(--error);
+}
+
+.arrow-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.wasted-label {
+    color: var(--error);
+    font-weight: 600;
+}
+
+
+/* =============================================
+   SIMULATOR CARD + CONTROLS
+   ============================================= */
+
+.simulator-card {
+    border-color: var(--accent);
+    box-shadow: 0 0 30px var(--accent-glow);
+}
+
+.sim-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.sim-input-group {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.sim-input {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 0.6rem 0.9rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    width: 130px;
+    outline: none;
+    transition: border-color 0.2s;
+    min-height: 44px;
+}
+
+.sim-input:focus {
+    border-color: var(--accent);
+}
+
+.sim-size-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+.sim-size-control select {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 0.45rem 0.7rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+
+/* =============================================
+   POINTER PILLS
+   ============================================= */
+
+.sim-pointers {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.ptr {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: var(--radius-sm);
+}
+
+.front-ptr {
+    background: var(--accent-glow);
+    color: var(--accent);
+    border: 1px solid rgba(164, 180, 101, 0.3);
+}
+
+.rear-ptr {
+    background: var(--gold-glow);
+    color: var(--gold);
+    border: 1px solid rgba(255, 207, 80, 0.25);
+}
+
+[data-theme="light"] .rear-ptr {
+    color: #8A7010;
+}
+
+.size-ptr {
+    background: var(--olive-glow);
+    color: var(--olive);
+    border: 1px solid rgba(98, 111, 71, 0.3);
+}
+
+
+/* =============================================
+   SIMULATOR ARRAY
+   ============================================= */
+
+.sim-array {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 1rem;
+    min-height: 80px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.sim-cell {
+    position: relative;
+    min-width: 82px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--cell-empty);
+    font-family: var(--font-mono);
+    transition: all 0.35s ease;
+}
+
+.sim-cell .cell-value {
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.sim-cell .cell-index {
+    position: absolute;
+    bottom: -20px;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+}
+
+.sim-cell .cell-markers {
+    position: absolute;
+    top: -22px;
+    display: flex;
+    gap: 3px;
+}
+
+.marker {
+    font-size: 0.62rem;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 3px;
+}
+
+.marker-front {
+    background: var(--accent);
+    color: #fff;
+}
+
+.marker-rear {
+    background: var(--gold);
+    color: #2A2E1E;
+}
+
+.sim-cell.filled {
+    background: var(--cell-filled-bg);
+    border-color: var(--cell-filled-border);
+    color: var(--accent);
+}
+
+.sim-cell.is-front {
+    background: var(--cell-front-bg);
+    border-color: var(--cell-front-border);
+    color: var(--success);
+}
+
+.sim-cell.is-rear {
+    background: var(--cell-rear-bg);
+    border-color: var(--cell-rear-border);
+    color: var(--gold);
+}
+
+[data-theme="light"] .sim-cell.is-rear {
+    color: #8A7010;
+}
+
+.sim-cell.is-front.is-rear {
+    background: var(--cell-filled-bg);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.sim-cell.wasted {
+    background: var(--cell-wasted-bg);
+    border-color: var(--cell-wasted-border);
+    color: var(--error);
+}
+
+
+/* =============================================
+   SIMULATOR ANIMATIONS
+   ============================================= */
+
+.sim-cell.pop-in {
+    animation: popIn 0.35s ease;
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0.7);
+        opacity: 0.5;
+    }
+
+    60% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.sim-cell.pop-out {
+    animation: popOut 0.35s ease;
+}
+
+@keyframes popOut {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.7) translateY(-10px);
+        opacity: 0;
+    }
+}
+
+
+/* =============================================
+   SIMULATOR LOG
+   ============================================= */
+
+.sim-log {
+    max-height: 170px;
+    overflow-y: auto;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.6rem 0.8rem;
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    line-height: 1.7;
+}
+
+.log-entry {
+    padding: 0.15rem 0;
+    border-bottom: 1px solid rgba(58, 58, 44, 0.3);
+}
+
+.log-entry:last-child {
+    border-bottom: none;
+}
+
+.log-entry.info {
+    color: var(--accent);
+}
+
+.log-entry.success {
+    color: var(--success);
+}
+
+.log-entry.warning {
+    color: var(--gold);
+}
+
+[data-theme="light"] .log-entry.warning {
+    color: #8A7010;
+}
+
+.log-entry.error {
+    color: var(--error);
+}
+
+
+/* =============================================
+   COMPARISON HELPERS USED WITH SIMS
+   ============================================= */
+
+.trace-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-bottom: 0.8rem;
+}
+
+.trace-info {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.8rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    min-height: 60px;
+    white-space: pre-line;
+}
+
+.circular-diagram {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+#circularCanvas {
+    border-radius: var(--radius);
+}
+
+
+/* =============================================
+   RESPONSIVE SIMULATOR
+   ============================================= */
+
+@media (max-width: 900px) {
+    .comparison-box {
+        flex-direction: column;
+    }
+
+    .compare-arrow {
+        justify-content: center;
+        padding: 0.3rem 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .sim-cell {
+        min-width: 60px;
+        height: 58px;
+    }
+}
