@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queue Mastery — Cambridge AS CS 9618</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/simulator.css">
+    <link rel="stylesheet" href="css/learning.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet">
+</head>
+<body>
+    <!-- LOGIN OVERLAY -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <div class="login-badge">CAMBRIDGE AS 9618</div>
+            <h1>Queue Mastery</h1>
+            <p class="login-sub">Enter your name to begin tracking your progress.</p>
+            <div class="login-field">
+                <label for="loginFirst">First name</label>
+                <input type="text" id="loginFirst" placeholder="e.g. Alice" maxlength="30" autofocus>
+            </div>
+            <div class="login-field">
+                <label for="loginLast">Last name</label>
+                <input type="text" id="loginLast" placeholder="e.g. Chen" maxlength="30">
+            </div>
+            <div class="login-error" id="loginError"></div>
+            <button class="btn btn-primary" style="width:100%" onclick="doLogin()">Start Learning</button>
+        </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav id="topNav">
+        <div class="nav-brand">
+            <span class="nav-title">Queue Mastery</span>
+            <span class="nav-badge">9618</span>
+        </div>
+        <div class="nav-links">
+            <a href="#" data-section="home" class="nav-link active">Home</a>
+            <a href="linear.html" class="nav-link">Linear Queue</a>
+            <a href="circular.html" class="nav-link">Circular Queue</a>
+            <a href="#" data-section="code" class="nav-link">Code Lab</a>
+            <a href="#" data-section="parsons" class="nav-link">Parsons</a>
+            <a href="#" data-section="quiz" class="nav-link">Quiz</a>
+            <a href="#" data-section="exam" class="nav-link">Exam Prep</a>
+        </div>
+        <div class="nav-right">
+            <span class="nav-student" id="navStudent"></span>
+            <div class="nav-progress-wrap">
+                <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                <span class="progress-text" id="progressText">0%</span>
+            </div>
+            <div class="nav-toggles">
+                <button class="toggle-btn" id="themeToggle" onclick="toggleTheme()"><span id="themeLabel">Light Mode</span></button>
+                <button class="toggle-btn" id="fontToggle" onclick="toggleFont()"><span id="fontLabel">Dyslexia Font</span></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HOME / DASHBOARD -->
+    <section id="home" class="section active">
+        <div class="hero">
+            <div class="hero-bg-shapes"><div class="shape shape-1"></div><div class="shape shape-2"></div><div class="shape shape-3"></div></div>
+            <div class="hero-content">
+                <p class="hero-label">Cambridge International AS &amp; A Level Computer Science 9618</p>
+                <div class="student-welcome" id="heroWelcome"></div>
+                <h1 class="hero-title">Mastering Queues</h1>
+                <p class="hero-subtitle">An interactive deep-dive into linear and circular queues — from abstract data types to array implementations.</p>
+            </div>
+        </div>
+        <div class="dash-grid">
+            <a href="linear.html" class="dash-card" id="dashLinear">
+                <h3>Linear Queue</h3>
+                <p>Theory, diagrams, and interactive simulator for linear queues implemented in a 1D array.</p>
+                <div class="dash-progress"><div class="dash-bar"><div class="dash-bar-fill" id="dashLinearFill" style="width:0%"></div></div><span class="dash-pct" id="dashLinearPct">0%</span></div>
+            </a>
+            <a href="circular.html" class="dash-card" id="dashCircular">
+                <h3>Circular Queue</h3>
+                <p>MOD wrap-around, trace tool, and interactive simulator for circular queues.</p>
+                <div class="dash-progress"><div class="dash-bar"><div class="dash-bar-fill" id="dashCircularFill" style="width:0%"></div></div><span class="dash-pct" id="dashCircularPct">0%</span></div>
+            </a>
+            <div class="dash-card" style="cursor:pointer" onclick="navTo('exam')">
+                <h3>Exam Prep</h3>
+                <p>10 Cambridge-style written questions with AI-powered feedback on accuracy, terminology, and depth.</p>
+                <div class="dash-progress"><div class="dash-bar"><div class="dash-bar-fill" id="dashExamFill" style="width:0%"></div></div><span class="dash-pct" id="dashExamPct">0%</span></div>
+            </div>
+        </div>
+
+        <!-- ADT INTRO -->
+        <div class="content-card">
+            <h2>What is an Abstract Data Type (ADT)?</h2>
+            <div class="adt-grid">
+                <div class="adt-definition">
+                    <div class="callout callout-teal">
+                        <h3>Definition</h3>
+                        <p>An <strong>Abstract Data Type (ADT)</strong> is a <em>collection of data</em> together with a <em>set of operations</em> that can be performed on that data. The ADT defines <strong>what</strong> operations are available, but not <strong>how</strong> they are implemented.</p>
+                    </div>
+                    <p>Think of an ADT like a vending machine: you know what buttons to press (operations) and what you get out (results), but you don't need to know the internal mechanics.</p>
+                    <div class="callout callout-gold">
+                        <h3>Key ADTs for 9618</h3>
+                        <ul>
+                            <li><strong>Stack</strong> — Last In, First Out (LIFO)</li>
+                            <li><strong>Queue</strong> — First In, First Out (FIFO) — <em>our focus</em></li>
+                            <li><strong>Linked List</strong> — Dynamic sequential collection</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="adt-visual">
+                    <div class="adt-card">
+                        <div class="adt-card-header">Queue ADT</div>
+                        <div class="adt-card-body">
+                            <div class="adt-section"><h4>Data</h4><p>An ordered collection of elements</p></div>
+                            <div class="adt-divider"></div>
+                            <div class="adt-section"><h4>Operations</h4>
+                                <div class="op-list">
+                                    <span class="op-tag enqueue">Enqueue</span>
+                                    <span class="op-tag dequeue">Dequeue</span>
+                                    <span class="op-tag peek">Peek / Front</span>
+                                    <span class="op-tag util">IsEmpty</span>
+                                    <span class="op-tag util">IsFull</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="visual-caption">The Queue ADT separates <em>interface</em> from <em>implementation</em>.</p>
+                </div>
+            </div>
+        </div>
+        <div class="content-card">
+            <h2>Real-World Queue Examples</h2>
+            <div class="examples-grid">
+                <div class="example-item"><h4>Print Queue</h4><p>Documents printed in the order sent to the printer.</p></div>
+                <div class="example-item"><h4>Call Centre</h4><p>Callers served in the order they joined the line.</p></div>
+                <div class="example-item"><h4>Keyboard Buffer</h4><p>Keystrokes processed in the order typed.</p></div>
+                <div class="example-item"><h4>Web Server</h4><p>HTTP requests handled first-come, first-served.</p></div>
+            </div>
+        </div>
+        <div class="content-card">
+            <h2>Why Use a Queue?</h2>
+            <div class="justify-table">
+                <table>
+                    <thead><tr><th>Situation</th><th>Why a Queue?</th><th>Why Not a Stack?</th></tr></thead>
+                    <tbody>
+                        <tr><td>Processing tasks in arrival order</td><td class="good">FIFO preserves fairness</td><td class="bad">LIFO would process newest first</td></tr>
+                        <tr><td>Buffering data between processes</td><td class="good">Maintains original sequence</td><td class="bad">Would reverse the sequence</td></tr>
+                        <tr><td>Breadth-first graph traversal</td><td class="good">Explores level by level</td><td class="bad">Would give depth-first traversal</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="section-nav-bottom">
+            <a href="linear.html" class="btn btn-primary">Explore Linear Queues</a>
+            <a href="circular.html" class="btn btn-gold">Explore Circular Queues</a>
+        </div>
+    </section>
+
+    <!-- CODE LAB -->
+    <section id="code" class="section">
+        <div class="section-header"><h1>Code Lab</h1><p class="section-desc">Java implementations of linear and circular queues using 1D arrays.</p></div>
+        <div class="content-card">
+            <h2>Java Implementation</h2>
+            <div class="code-tabs">
+                <button class="code-tab active" data-target="javaLinear">Linear Queue</button>
+                <button class="code-tab" data-target="javaCircular">Circular Queue</button>
+            </div>
+            <pre class="code-block java" id="javaLinear"><code><span class="kw">public class</span> <span class="cls">LinearQueue</span> {
+    <span class="kw">private</span> String[] queue;
+    <span class="kw">private int</span> front, rear, maxSize;
+
+    <span class="kw">public</span> <span class="cls">LinearQueue</span>(<span class="kw">int</span> size) {
+        maxSize = size;
+        queue = <span class="kw">new</span> String[maxSize];
+        front = <span class="num">0</span>;  rear = -<span class="num">1</span>;
+    }
+
+    <span class="kw">public void</span> <span class="fn">enqueue</span>(String item) {
+        <span class="kw">if</span> (rear >= maxSize - <span class="num">1</span>) {
+            System.out.println(<span class="str">"Queue is full"</span>);
+        } <span class="kw">else</span> {
+            rear++;
+            queue[rear] = item;
+        }
+    }
+
+    <span class="kw">public</span> String <span class="fn">dequeue</span>() {
+        <span class="kw">if</span> (front > rear) {
+            System.out.println(<span class="str">"Queue is empty"</span>);
+            <span class="kw">return</span> <span class="str">""</span>;
+        }
+        String item = queue[front];
+        front++;
+        <span class="kw">return</span> item;
+    }
+
+    <span class="kw">public boolean</span> <span class="fn">isEmpty</span>() { <span class="kw">return</span> front > rear; }
+    <span class="kw">public boolean</span> <span class="fn">isFull</span>()  { <span class="kw">return</span> rear >= maxSize - <span class="num">1</span>; }
+}</code></pre>
+            <pre class="code-block java hidden" id="javaCircular"><code><span class="kw">public class</span> <span class="cls">CircularQueue</span> {
+    <span class="kw">private</span> String[] queue;
+    <span class="kw">private int</span> front, rear, size, maxSize;
+
+    <span class="kw">public</span> <span class="cls">CircularQueue</span>(<span class="kw">int</span> capacity) {
+        maxSize = capacity;
+        queue = <span class="kw">new</span> String[maxSize];
+        front = <span class="num">0</span>;  rear = -<span class="num">1</span>;  size = <span class="num">0</span>;
+    }
+
+    <span class="kw">public void</span> <span class="fn">enqueue</span>(String item) {
+        <span class="kw">if</span> (size >= maxSize) {
+            System.out.println(<span class="str">"Queue is full"</span>);
+        } <span class="kw">else</span> {
+            rear = (rear + <span class="num">1</span>) % maxSize;  <span class="cmt">// MOD wrap-around</span>
+            queue[rear] = item;
+            size++;
+        }
+    }
+
+    <span class="kw">public</span> String <span class="fn">dequeue</span>() {
+        <span class="kw">if</span> (size == <span class="num">0</span>) {
+            System.out.println(<span class="str">"Queue is empty"</span>);
+            <span class="kw">return</span> <span class="str">""</span>;
+        }
+        String item = queue[front];
+        front = (front + <span class="num">1</span>) % maxSize;  <span class="cmt">// MOD wrap-around</span>
+        size--;
+        <span class="kw">return</span> item;
+    }
+
+    <span class="kw">public boolean</span> <span class="fn">isEmpty</span>() { <span class="kw">return</span> size == <span class="num">0</span>; }
+    <span class="kw">public boolean</span> <span class="fn">isFull</span>()  { <span class="kw">return</span> size >= maxSize; }
+}</code></pre>
+        </div>
+        <div class="content-card">
+            <h2>Code Annotation Challenge</h2>
+            <p>Click on each line to reveal what it does.</p>
+            <div class="annotation-block" id="annotationBlock">
+                <div class="anno-line"><code>rear = (rear + 1) % maxSize;</code><span class="anno-reveal hidden">Calculate new rear position using MOD to wrap around the array</span><button class="anno-btn" onclick="revealAnnotation(this)">?</button></div>
+                <div class="anno-line"><code>queue[rear] = item;</code><span class="anno-reveal hidden">Store the new item at the position indicated by the rear pointer</span><button class="anno-btn" onclick="revealAnnotation(this)">?</button></div>
+                <div class="anno-line"><code>size = size + 1;</code><span class="anno-reveal hidden">Track the number of elements currently in the queue</span><button class="anno-btn" onclick="revealAnnotation(this)">?</button></div>
+                <div class="anno-line"><code>String item = queue[front];</code><span class="anno-reveal hidden">Retrieve the item at the front of the queue before moving the pointer</span><button class="anno-btn" onclick="revealAnnotation(this)">?</button></div>
+                <div class="anno-line"><code>front = (front + 1) % maxSize;</code><span class="anno-reveal hidden">Move front forward with wrap-around — frees the old front slot for reuse</span><button class="anno-btn" onclick="revealAnnotation(this)">?</button></div>
+                <div class="anno-line"><code>if (size >= maxSize)</code><span class="anno-reveal hidden">Check if the queue is full by comparing current size to maximum capacity</span><button class="anno-btn" onclick="revealAnnotation(this)">?</button></div>
+            </div>
+        </div>
+        <div class="section-nav-bottom">
+            <button class="btn btn-secondary" onclick="navTo('home')">Home</button>
+            <button class="btn btn-primary" onclick="navTo('parsons')">Next: Parsons Problems</button>
+        </div>
+    </section>
+
+    <!-- PARSONS PROBLEMS -->
+    <section id="parsons" class="section">
+        <div class="section-header"><h1>Parsons Problems</h1><p class="section-desc">Drag the lines of code into the correct order to build working queue operations.</p></div>
+        <div class="content-card">
+            <div class="parsons-selector">
+                <button class="parsons-tab active" data-problem="0">Enqueue (Linear)</button>
+                <button class="parsons-tab" data-problem="1">Dequeue (Linear)</button>
+                <button class="parsons-tab" data-problem="2">Enqueue (Circular)</button>
+                <button class="parsons-tab" data-problem="3">Dequeue (Circular)</button>
+            </div>
+            <div class="parsons-container">
+                <div class="parsons-instructions" id="parsonsInstructions">Arrange the pseudocode lines in the correct order for a <strong>linear queue enqueue</strong> operation.</div>
+                <div class="parsons-workspace">
+                    <div class="parsons-source"><h4>Available Lines</h4><div class="parsons-bank" id="parsonsBank"></div></div>
+                    <div class="parsons-target"><h4>Your Solution</h4><div class="parsons-solution" id="parsonsSolution"></div></div>
+                </div>
+                <div class="parsons-actions">
+                    <button class="btn btn-primary" onclick="checkParsons()">Check Answer</button>
+                    <button class="btn btn-secondary" onclick="resetParsons()">Reset</button>
+                    <button class="btn btn-secondary" onclick="hintParsons()">Hint</button>
+                </div>
+                <div class="parsons-feedback" id="parsonsFeedback"></div>
+            </div>
+        </div>
+        <div class="section-nav-bottom">
+            <button class="btn btn-secondary" onclick="navTo('code')">Code Lab</button>
+            <button class="btn btn-primary" onclick="navTo('quiz')">Next: Quiz</button>
+        </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="quiz" class="section">
+        <div class="section-header"><h1>Knowledge Check</h1><p class="section-desc">Test your understanding. Receive adaptive feedback on every question.</p></div>
+        <div class="content-card" id="quizCard">
+            <div class="quiz-header">
+                <div class="quiz-progress-info"><span>Question <strong id="quizCurrent">1</strong> of <strong id="quizTotal">12</strong></span><span class="quiz-score">Score: <strong id="quizScore">0</strong></span></div>
+                <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+            </div>
+            <div class="quiz-question" id="quizQuestion"></div>
+            <div class="quiz-options" id="quizOptions"></div>
+            <div class="quiz-feedback" id="quizFeedback"></div>
+            <div class="quiz-actions"><button class="btn btn-primary hidden" id="quizNextBtn" onclick="nextQuestion()">Next Question</button></div>
+        </div>
+        <div class="quiz-results hidden" id="quizResults">
+            <div class="content-card results-card">
+                <h2 id="resultsTitle"></h2>
+                <div class="results-score" id="resultsScore"></div>
+                <div class="results-breakdown" id="resultsBreakdown"></div>
+                <div class="results-advice" id="resultsAdvice"></div>
+                <div class="results-actions">
+                    <button class="btn btn-primary" onclick="restartQuiz()">Retake Quiz</button>
+                    <button class="btn btn-secondary" onclick="navTo('home')">Review Content</button>
+                </div>
+            </div>
+        </div>
+        <div class="section-nav-bottom"><button class="btn btn-secondary" onclick="navTo('parsons')">Parsons Problems</button><button class="btn btn-gold" onclick="navTo('exam')">Exam Prep</button></div>
+    </section>
+
+    <!-- EXAM PREP -->
+    <section id="exam" class="section">
+        <div class="section-header">
+            <h1>Exam Prep</h1>
+            <p class="section-desc">Cambridge 9618-style written questions. Type your answer and receive targeted feedback on accuracy, terminology, and depth of understanding.</p>
+        </div>
+        <div class="content-card">
+            <div class="exam-nav" id="examNav"></div>
+            <div id="examQuestionsContainer"></div>
+            <div class="exam-actions" style="justify-content:center; margin-top:1.5rem">
+                <button class="btn btn-secondary" id="examPrevBtn" onclick="examPagePrev()" disabled>Previous 3</button>
+                <button class="btn btn-primary" id="examNextBtn" onclick="examPageNext()">Next 3</button>
+            </div>
+        </div>
+        <div class="section-nav-bottom"><button class="btn btn-secondary" onclick="navTo('quiz')">Quiz</button><button class="btn btn-secondary" onclick="navTo('home')">Home</button></div>
+    </section>
+
+    <!-- Quick Ref -->
+    <div class="quick-ref-toggle" id="quickRefToggle" onclick="toggleQuickRef()"><span>Ref</span></div>
+    <div class="quick-ref-panel hidden" id="quickRefPanel">
+        <h3>Quick Reference</h3>
+        <div class="qr-section"><h4>Linear Queue</h4>
+            <p><strong>Enqueue:</strong> Rear <- Rear + 1; Queue[Rear] <- Item</p>
+            <p><strong>Dequeue:</strong> Item <- Queue[Front]; Front <- Front + 1</p>
+            <p><strong>Full:</strong> Rear >= MaxSize - 1 &nbsp; <strong>Empty:</strong> Front > Rear</p>
+        </div>
+        <div class="qr-section"><h4>Circular Queue</h4>
+            <p><strong>Enqueue:</strong> Rear <- (Rear+1) MOD MaxSize</p>
+            <p><strong>Dequeue:</strong> Front <- (Front+1) MOD MaxSize</p>
+            <p><strong>Full:</strong> Size = MaxSize &nbsp; <strong>Empty:</strong> Size = 0</p>
+        </div>
+        <button class="btn btn-sm" onclick="toggleQuickRef()">Close</button>
+    </div>
+
+    <!-- Copyright Notice -->
+     <footer>
+        <h6>&copy Crimson Global Academy 2026</h6>
+        <h6>Cambridge AS Computer Science 9618</h6>
+     </footer>
+
+    <script src="app.js"></script>
+
+</body>
+</html>

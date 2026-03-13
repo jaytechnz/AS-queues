@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circular Queue — Queue Mastery 9618</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/simulator.css">
+    <link rel="stylesheet" href="css/learning.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet">
+</head>
+<body>
+    <div class="login-overlay" id="loginOverlay" style="display:none"></div>
+    <nav id="topNav">
+        <div class="nav-brand"><span class="nav-title">Queue Mastery</span><span class="nav-badge">9618</span></div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="linear.html" class="nav-link">Linear Queue</a>
+            <a href="circular.html" class="nav-link active">Circular Queue</a>
+            <a href="index.html#code" class="nav-link">Code Lab</a>
+            <a href="index.html#parsons" class="nav-link">Parsons</a>
+            <a href="index.html#quiz" class="nav-link">Quiz</a>
+            <a href="index.html#exam" class="nav-link">Exam Prep</a>
+        </div>
+        <div class="nav-right">
+            <span class="nav-student" id="navStudent"></span>
+            <div class="nav-progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0%</span></div>
+            <div class="nav-toggles">
+                <button class="toggle-btn" id="themeToggle" onclick="toggleTheme()"><span id="themeLabel">Light Mode</span></button>
+                <button class="toggle-btn" id="fontToggle" onclick="toggleFont()"><span id="fontLabel">Dyslexia Font</span></button>
+            </div>
+        </div>
+    </nav>
+
+    <section id="circularPage" class="section active">
+        <div class="section-header"><h1>Circular Queue</h1><p class="section-desc">Solves the wasted space problem by treating the array as if it wraps around in a circle.</p></div>
+
+        <div class="content-card">
+            <h2>Why Circular Queues?</h2>
+            <div class="comparison-box">
+                <div class="compare-side bad-side"><h3>Linear Queue Problem</h3>
+                    <div class="mini-queue"><div class="mq wasted">—</div><div class="mq wasted">—</div><div class="mq wasted">—</div><div class="mq filled">D</div><div class="mq filled">E</div><div class="mq filled">F</div></div>
+                    <p>3 wasted slots. Rear at index 5 (max). Reports <strong>"FULL"</strong> with only 3/6 used!</p>
+                </div>
+                <div class="compare-arrow">becomes</div>
+                <div class="compare-side good-side"><h3>Circular Queue Solution</h3>
+                    <div class="mini-queue"><div class="mq filled">G</div><div class="mq empty">·</div><div class="mq empty">·</div><div class="mq filled">D</div><div class="mq filled">E</div><div class="mq filled">F</div></div>
+                    <p>Rear wraps to index 0. Freed slots reused. <strong>G</strong> fills the vacated slot.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>How a Circular Queue Works</h2>
+            <div class="concept-grid">
+                <div class="concept-text">
+                    <div class="callout callout-teal"><h3>The Key Idea: MOD</h3>
+                        <p>Instead of simply incrementing pointers, we use <strong>modular arithmetic</strong>:</p>
+                        <div class="formula">Rear ← (Rear + 1) MOD MaxSize</div>
+                        <div class="formula">Front ← (Front + 1) MOD MaxSize</div>
+                        <p>This makes the pointer "wrap around" to index 0 when it passes the end of the array.</p>
+                    </div>
+                    <div class="op-detail"><h4><span class="op-tag enqueue">Enqueue</span></h4><ol>
+                        <li>Check if the queue is full (size = MaxSize)</li>
+                        <li>Rear ← (Rear + 1) MOD MaxSize</li>
+                        <li>Place item at Queue[Rear]</li>
+                        <li>Increment size counter</li>
+                    </ol></div>
+                    <div class="op-detail"><h4><span class="op-tag dequeue">Dequeue</span></h4><ol>
+                        <li>Check if the queue is empty (size = 0)</li>
+                        <li>Retrieve item at Queue[Front]</li>
+                        <li>Front ← (Front + 1) MOD MaxSize</li>
+                        <li>Decrement size counter</li>
+                    </ol></div>
+                    <div class="callout callout-gold"><h3>Detecting Full vs Empty</h3>
+                        <p>In a circular queue, front can equal rear when <em>full</em> OR <em>empty</em>. Solutions:</p>
+                        <ul><li><strong>Size counter</strong> (simplest — used here)</li><li>Keep one slot always empty</li><li>Boolean flag</li></ul>
+                    </div>
+                </div>
+                <div class="concept-visual">
+                    <h3>Circular Visualisation</h3>
+                    <div class="circular-diagram"><canvas id="circularCanvas" width="320" height="320"></canvas></div>
+                    <p class="visual-caption">The array is logically arranged in a circle. Pointers wrap using MOD.</p>
+                    <h3 style="margin-top:2rem">Trace Example</h3>
+                    <div class="trace-steps" id="circularTrace">
+                        <button class="btn btn-sm" onclick="runTrace(0)">Start</button>
+                        <button class="btn btn-sm" onclick="runTrace(1)">Enq(A)</button>
+                        <button class="btn btn-sm" onclick="runTrace(2)">Enq(B)</button>
+                        <button class="btn btn-sm" onclick="runTrace(3)">Enq(C)</button>
+                        <button class="btn btn-sm" onclick="runTrace(4)">Enq(D)</button>
+                        <button class="btn btn-sm" onclick="runTrace(5)">Deq-A</button>
+                        <button class="btn btn-sm" onclick="runTrace(6)">Deq-B</button>
+                        <button class="btn btn-sm" onclick="runTrace(7)">Enq(E)</button>
+                        <button class="btn btn-sm" onclick="runTrace(8)">Enq(F)</button>
+                    </div>
+                    <div class="trace-info" id="traceInfo">Click a step above to trace through circular queue operations.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card simulator-card">
+            <h2>Interactive Circular Queue Simulator</h2>
+            <p>Observe how the rear pointer wraps around when it reaches the end of the array.</p>
+            <div class="sim-controls">
+                <div class="sim-input-group">
+                    <input type="text" id="circularInput" placeholder="Enter value..." maxlength="4" class="sim-input">
+                    <button class="btn btn-enqueue" onclick="circularEnqueue()">Enqueue</button>
+                    <button class="btn btn-dequeue" onclick="circularDequeue()">Dequeue</button>
+                    <button class="btn btn-reset" onclick="circularReset()">Reset</button>
+                </div>
+                <div class="sim-size-control"><label>Array size:</label>
+                    <select id="circularSize" onchange="circularReset()"><option value="5">5</option><option value="6" selected>6</option><option value="8">8</option></select>
+                </div>
+            </div>
+            <div class="sim-pointers">
+                <span class="ptr front-ptr">Front: <strong id="circularFrontVal">0</strong></span>
+                <span class="ptr rear-ptr">Rear: <strong id="circularRearVal">-1</strong></span>
+                <span class="ptr size-ptr">Size: <strong id="circularSizeVal">0</strong></span>
+            </div>
+            <div class="sim-array" id="circularArray"></div>
+            <div class="sim-log" id="circularLog"><div class="log-entry info">Circular queue initialised. Front = 0, Rear = -1, Size = 0.</div></div>
+        </div>
+
+        <div class="content-card">
+            <h2>Circular Queue — Pseudocode (9618 Style)</h2>
+            <div class="code-tabs">
+                <button class="code-tab active" data-target="cpEnq">Enqueue</button>
+                <button class="code-tab" data-target="cpDeq">Dequeue</button>
+                <button class="code-tab" data-target="cpChk">IsEmpty / IsFull</button>
+            </div>
+            <pre class="code-block" id="cpEnq"><code>PROCEDURE Enqueue(Queue, Front, Rear, Size, MaxSize, Item)
+    IF Size >= MaxSize THEN
+        OUTPUT "Queue is full"
+    ELSE
+        Rear ← (Rear + 1) MOD MaxSize
+        Queue[Rear] ← Item
+        Size ← Size + 1
+    ENDIF
+ENDPROCEDURE</code></pre>
+            <pre class="code-block hidden" id="cpDeq"><code>FUNCTION Dequeue(Queue, Front, Rear, Size)
+    IF Size = 0 THEN
+        OUTPUT "Queue is empty"
+        RETURN ""
+    ELSE
+        Item ← Queue[Front]
+        Front ← (Front + 1) MOD MaxSize
+        Size ← Size - 1
+        RETURN Item
+    ENDIF
+ENDFUNCTION</code></pre>
+            <pre class="code-block hidden" id="cpChk"><code>FUNCTION IsEmpty(Size)
+    RETURN Size = 0
+ENDFUNCTION
+
+FUNCTION IsFull(Size, MaxSize)
+    RETURN Size >= MaxSize
+ENDFUNCTION</code></pre>
+        </div>
+
+        <div class="content-card">
+            <h2>Linear vs Circular — Comparison</h2>
+            <div class="justify-table"><table>
+                <thead><tr><th>Feature</th><th>Linear Queue</th><th>Circular Queue</th></tr></thead>
+                <tbody>
+                    <tr><td>Space efficiency</td><td class="bad">Wasted space after dequeues</td><td class="good">Reuses freed space</td></tr>
+                    <tr><td>Pointer movement</td><td>Front++ and Rear++</td><td>(ptr+1) MOD MaxSize</td></tr>
+                    <tr><td>Full detection</td><td>Rear = MaxSize - 1</td><td>Size = MaxSize</td></tr>
+                    <tr><td>Empty detection</td><td>Front > Rear</td><td>Size = 0</td></tr>
+                    <tr><td>Complexity</td><td class="good">Simpler to implement</td><td class="bad">Slightly more complex</td></tr>
+                    <tr><td>Best for</td><td>Simple, short-lived queues</td><td>Long-running systems</td></tr>
+                </tbody>
+            </table></div>
+        </div>
+        <div class="section-nav-bottom">
+            <a href="linear.html" class="btn btn-secondary">Linear Queue</a>
+            <a href="index.html" class="btn btn-primary">Back to Hub</a>
+        </div>
+    </section>
+
+      <!-- Copyright Notice -->
+     <footer>
+        <h6>&copy Crimson Global Academy 2026</h6>
+        <h6>Cambridge AS Computer Science 9618</h6>
+     </footer>
+
+    <script src="app.js"></script>
+    
+    <script>document.addEventListener('DOMContentLoaded',()=>{markVisited('circular');circularReset();drawCircularDiagram();});</script>
+</body>
+</html>

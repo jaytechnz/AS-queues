@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear Queue — Queue Mastery 9618</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/simulator.css">
+    <link rel="stylesheet" href="css/learning.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet">
+</head>
+<body>
+    <div class="login-overlay" id="loginOverlay" style="display:none"></div>
+    <nav id="topNav">
+        <div class="nav-brand"><span class="nav-title">Queue Mastery</span><span class="nav-badge">9618</span></div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="linear.html" class="nav-link active">Linear Queue</a>
+            <a href="circular.html" class="nav-link">Circular Queue</a>
+            <a href="index.html#code" class="nav-link">Code Lab</a>
+            <a href="index.html#parsons" class="nav-link">Parsons</a>
+            <a href="index.html#quiz" class="nav-link">Quiz</a>
+            <a href="index.html#exam" class="nav-link">Exam Prep</a>
+        </div>
+        <div class="nav-right">
+            <span class="nav-student" id="navStudent"></span>
+            <div class="nav-progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><span class="progress-text" id="progressText">0%</span></div>
+            <div class="nav-toggles">
+                <button class="toggle-btn" id="themeToggle" onclick="toggleTheme()"><span id="themeLabel">Light Mode</span></button>
+                <button class="toggle-btn" id="fontToggle" onclick="toggleFont()"><span id="fontLabel">Dyslexia Font</span></button>
+            </div>
+        </div>
+    </nav>
+
+    <section id="linearPage" class="section active">
+        <div class="section-header"><h1>Linear Queue</h1><p class="section-desc">The simplest queue implementation — elements enter at the rear and leave from the front, stored in a one-dimensional array.</p></div>
+
+        <div class="content-card">
+            <h2>How a Linear Queue Works</h2>
+            <div class="concept-grid">
+                <div class="concept-text">
+                    <div class="callout callout-teal"><h3>Key Pointers</h3><ul>
+                        <li><strong>Front</strong> — points to the first element (next to be removed)</li>
+                        <li><strong>Rear</strong> — points to the last element (most recently added)</li>
+                    </ul></div>
+                    <h3>Operations</h3>
+                    <div class="op-detail"><h4><span class="op-tag enqueue">Enqueue</span> Add to rear</h4><ol>
+                        <li>Check if the queue is full (rear = MaxSize - 1)</li>
+                        <li>Increment rear pointer by 1</li>
+                        <li>Place the new item at queue[rear]</li>
+                    </ol></div>
+                    <div class="op-detail"><h4><span class="op-tag dequeue">Dequeue</span> Remove from front</h4><ol>
+                        <li>Check if the queue is empty (front > rear)</li>
+                        <li>Retrieve item at queue[front]</li>
+                        <li>Increment front pointer by 1</li>
+                    </ol></div>
+                    <div class="callout callout-warn"><h3>The Problem with Linear Queues</h3>
+                        <p>Once the rear pointer reaches the end of the array, <strong>no more items can be added</strong> — even if spaces at the front have been freed by dequeue operations. This wasted space is the main limitation.</p>
+                    </div>
+                </div>
+                <div class="concept-visual">
+                    <h3>Initial State (Empty Queue, Size 6)</h3>
+                    <div class="pointer-labels"><span>Front = 0</span><span>Rear = -1</span></div>
+                    <div class="static-queue-visual">
+                        <div class="sq-cell empty"><span class="idx">0</span></div><div class="sq-cell empty"><span class="idx">1</span></div><div class="sq-cell empty"><span class="idx">2</span></div><div class="sq-cell empty"><span class="idx">3</span></div><div class="sq-cell empty"><span class="idx">4</span></div><div class="sq-cell empty"><span class="idx">5</span></div>
+                    </div>
+                    <h3 style="margin-top:1.5rem">After Enqueue(A), Enqueue(B), Enqueue(C)</h3>
+                    <div class="pointer-labels"><span>Front = 0</span><span>Rear = 2</span></div>
+                    <div class="static-queue-visual">
+                        <div class="sq-cell filled front-cell"><span class="val">A</span><span class="idx">0</span></div><div class="sq-cell filled"><span class="val">B</span><span class="idx">1</span></div><div class="sq-cell filled rear-cell"><span class="val">C</span><span class="idx">2</span></div><div class="sq-cell empty"><span class="idx">3</span></div><div class="sq-cell empty"><span class="idx">4</span></div><div class="sq-cell empty"><span class="idx">5</span></div>
+                    </div>
+                    <h3 style="margin-top:1.5rem">After Dequeue() — returns A</h3>
+                    <div class="pointer-labels"><span>Front = 1</span><span>Rear = 2</span></div>
+                    <div class="static-queue-visual">
+                        <div class="sq-cell wasted"><span class="val">—</span><span class="idx">0</span></div><div class="sq-cell filled front-cell"><span class="val">B</span><span class="idx">1</span></div><div class="sq-cell filled rear-cell"><span class="val">C</span><span class="idx">2</span></div><div class="sq-cell empty"><span class="idx">3</span></div><div class="sq-cell empty"><span class="idx">4</span></div><div class="sq-cell empty"><span class="idx">5</span></div>
+                    </div>
+                    <p class="visual-caption">Index 0 is now <span class="wasted-label">wasted space</span> — it cannot be reused in a linear queue.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card simulator-card">
+            <h2>Interactive Linear Queue Simulator</h2>
+            <p>Try enqueue and dequeue operations yourself. Watch the front and rear pointers move.</p>
+            <div class="sim-controls">
+                <div class="sim-input-group">
+                    <input type="text" id="linearInput" placeholder="Enter value..." maxlength="4" class="sim-input">
+                    <button class="btn btn-enqueue" onclick="linearEnqueue()">Enqueue</button>
+                    <button class="btn btn-dequeue" onclick="linearDequeue()">Dequeue</button>
+                    <button class="btn btn-reset" onclick="linearReset()">Reset</button>
+                </div>
+                <div class="sim-size-control"><label>Array size:</label>
+                    <select id="linearSize" onchange="linearReset()"><option value="5">5</option><option value="6" selected>6</option><option value="8">8</option></select>
+                </div>
+            </div>
+            <div class="sim-pointers">
+                <span class="ptr front-ptr">Front: <strong id="linearFrontVal">0</strong></span>
+                <span class="ptr rear-ptr">Rear: <strong id="linearRearVal">-1</strong></span>
+                <span class="ptr size-ptr">Size: <strong id="linearSizeVal">0</strong></span>
+            </div>
+            <div class="sim-array" id="linearArray"></div>
+            <div class="sim-log" id="linearLog"><div class="log-entry info">Queue initialised. Front = 0, Rear = -1.</div></div>
+        </div>
+
+        <div class="content-card">
+            <h2>Linear Queue — Pseudocode (9618 Style)</h2>
+            <div class="code-tabs">
+                <button class="code-tab active" data-target="lpEnq">Enqueue</button>
+                <button class="code-tab" data-target="lpDeq">Dequeue</button>
+                <button class="code-tab" data-target="lpChk">IsEmpty / IsFull</button>
+            </div>
+            <pre class="code-block" id="lpEnq"><code>PROCEDURE Enqueue(Queue, Rear, MaxSize, Item)
+    IF Rear >= MaxSize - 1 THEN
+        OUTPUT "Queue is full"
+    ELSE
+        Rear ← Rear + 1
+        Queue[Rear] ← Item
+    ENDIF
+ENDPROCEDURE</code></pre>
+            <pre class="code-block hidden" id="lpDeq"><code>FUNCTION Dequeue(Queue, Front, Rear)
+    IF Front > Rear THEN
+        OUTPUT "Queue is empty"
+        RETURN ""
+    ELSE
+        Item ← Queue[Front]
+        Front ← Front + 1
+        RETURN Item
+    ENDIF
+ENDFUNCTION</code></pre>
+            <pre class="code-block hidden" id="lpChk"><code>FUNCTION IsEmpty(Front, Rear)
+    RETURN Front > Rear
+ENDFUNCTION
+
+FUNCTION IsFull(Rear, MaxSize)
+    RETURN Rear >= MaxSize - 1
+ENDFUNCTION</code></pre>
+        </div>
+        <div class="section-nav-bottom">
+            <a href="index.html" class="btn btn-secondary">Home</a>
+            <a href="circular.html" class="btn btn-primary">Next: Circular Queue</a>
+        </div>
+    </section>
+
+      <!-- Copyright Notice -->
+     <footer>
+        <h6>&copy Crimson Global Academy 2026</h6>
+        <h6>Cambridge AS Computer Science 9618</h6>
+     </footer>
+     
+    <script src="app.js"></script>
+    <script>document.addEventListener('DOMContentLoaded',()=>{markVisited('linear');linearReset();});</script>
+</body>
+</html>
