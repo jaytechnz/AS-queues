@@ -1,0 +1,339 @@
+/* =============================================
+   QUEUE MASTERY — COMPONENTS
+   Reusable UI components
+   ============================================= */
+
+
+/* =============================================
+   BUTTON VARIANTS
+   ============================================= */
+
+.btn-gold {
+    background: var(--gold);
+    color: #2A2E1E;
+}
+
+.btn-gold:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+}
+
+.btn-enqueue {
+    background: var(--accent);
+    color: #fff;
+}
+
+.btn-enqueue:hover {
+    filter: brightness(1.1);
+}
+
+.btn-dequeue {
+    background: var(--gold);
+    color: #2A2E1E;
+}
+
+.btn-dequeue:hover {
+    filter: brightness(1.08);
+}
+
+.btn-reset {
+    background: var(--bg-surface);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+}
+
+.btn-reset:hover {
+    color: var(--error);
+    border-color: var(--error);
+}
+
+.btn-sm {
+    padding: 0.5rem 0.95rem;
+    font-size: 0.88rem;
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    min-height: 38px;
+}
+
+.btn-sm:hover {
+    color: var(--text-primary);
+    border-color: var(--border-light);
+}
+
+
+/* =============================================
+   CALLOUT BOXES
+   ============================================= */
+
+.callout {
+    border-radius: var(--radius);
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 1.2rem;
+    border-left: 4px solid;
+}
+
+.callout h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.callout-teal {
+    background: var(--accent-glow);
+    border-color: var(--accent);
+}
+
+.callout-teal h3 {
+    color: var(--accent);
+}
+
+.callout-gold {
+    background: var(--gold-glow);
+    border-color: var(--gold);
+}
+
+.callout-gold h3 {
+    color: var(--gold);
+}
+
+[data-theme="light"] .callout-gold h3 {
+    color: #8A7010;
+}
+
+.callout-warn {
+    background: var(--error-glow);
+    border-color: var(--error);
+}
+
+.callout-warn h3 {
+    color: var(--error);
+}
+
+
+/* =============================================
+   TABLES
+   ============================================= */
+
+.justify-table {
+    overflow-x: auto;
+}
+
+.justify-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+}
+
+.justify-table th {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    font-weight: 600;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-bottom: 2px solid var(--border);
+}
+
+.justify-table td {
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+}
+
+.justify-table tr:hover td {
+    background: var(--bg-card-hover);
+}
+
+td.good {
+    color: var(--success);
+}
+
+td.bad {
+    color: var(--error);
+}
+
+
+/* =============================================
+   CODE BLOCKS
+   ============================================= */
+
+.code-tabs {
+    display: flex;
+    gap: 0.3rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.code-tab {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.code-tab:hover {
+    color: var(--text-primary);
+}
+
+.code-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
+.code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 var(--radius) var(--radius);
+    padding: 1.3rem 1.5rem;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+}
+
+.code-block.hidden {
+    display: none;
+}
+
+
+/* syntax highlighting */
+
+.code-block .kw {
+    color: var(--syn-kw);
+}
+
+.code-block .cls {
+    color: var(--syn-cls);
+}
+
+.code-block .fn {
+    color: var(--syn-fn);
+}
+
+.code-block .str {
+    color: var(--syn-str);
+}
+
+.code-block .num {
+    color: var(--syn-num);
+}
+
+.code-block .cmt {
+    color: var(--syn-cmt);
+    font-style: italic;
+}
+
+
+/* =============================================
+   FORMULA BLOCK
+   ============================================= */
+
+.formula {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--accent);
+    margin: 0.5rem 0;
+    display: inline-block;
+}
+
+
+/* =============================================
+   COMPARISON COMPONENT
+   ============================================= */
+
+.comparison-box {
+    display: flex;
+    align-items: stretch;
+    gap: 1rem;
+}
+
+.compare-side {
+    flex: 1;
+    padding: 1.2rem;
+    border-radius: var(--radius);
+}
+
+.bad-side {
+    background: var(--error-glow);
+    border: 1px solid rgba(212,102,74,0.2);
+}
+
+.bad-side h3 {
+    color: var(--error);
+    font-size: 1.05rem;
+    margin-bottom: 0.8rem;
+}
+
+.good-side {
+    background: var(--success-glow);
+    border: 1px solid rgba(164,180,101,0.2);
+}
+
+.good-side h3 {
+    color: var(--success);
+    font-size: 1.05rem;
+    margin-bottom: 0.8rem;
+}
+
+.compare-arrow {
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+
+/* =============================================
+   MINI QUEUE VISUAL
+   ============================================= */
+
+.mini-queue {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 0.8rem;
+}
+
+.mq {
+    width: 40px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.mq.filled {
+    background: var(--cell-filled-bg);
+    border: 1px solid var(--cell-filled-border);
+    color: var(--accent);
+}
+
+.mq.wasted {
+    background: var(--cell-wasted-bg);
+    border: 1px solid var(--cell-wasted-border);
+    color: var(--error);
+}
+
+.mq.empty {
+    background: var(--cell-empty);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+}
